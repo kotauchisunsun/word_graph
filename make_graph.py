@@ -35,9 +35,14 @@ if __name__=="__main__":
 	pairs = dict()
 
 	for obj in json:
-		for pair in combinations(obj.keys(),2):
-			key =  frozenset(pair)
-			pairs[key] = pairs.setdefault( frozenset(pair) , 0) + 1
+		if len(obj.keys()) == 1:
+			node = obj.keys()[0]
+			key = frozenset((node,node))
+			pairs[key] = pairs.setdefault( key, 0 ) + 1
+		elif len(obj.keys()) > 1:
+			for pair in combinations(obj.keys(),2):
+				key =  frozenset(pair)
+				pairs[key] = pairs.setdefault( key, 0) + 1
 
 
 	print "graph keys {"
